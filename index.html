@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Vue simple project</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.10/vue.common.dev.js"></script>
+</head>
+<body>
+
+    <div id="vue-app">
+        <div class="container mt-5" id="firstScreen" v-if="looser.length === 0">
+            <div class="row text-center" >
+                <h1 class="col-md-12">Who`s the looser?</h1>
+            </div>
+            <!-- main form -->
+            <form class="row mt-5" @submit.prevent="addName">
+                <input class="col-md-10 form-control" type="text" v-model="inputValue">
+                <button class="col-md-2 btn btn-info">Add</button>
+            </form>
+            <!-- error -->
+            <div class="row mt-2" v-if="error.length > 0">
+                <div class="card bg-danger col-md-10">
+                    <div class="card-body">
+                        <p class="card-text text-white">{{ error }}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- list of names -->
+            <div class="row mt-5" v-if="names.length > 0">
+                <h2 class="col-md-12 text-info">Names:</h2>
+                <ul class="col-md-12">
+                    <li v-for="(name, index) in names" :key="index" @click="deleteAddedName(index)"> {{name}} </li>
+                </ul>
+            </div>
+            <!-- generate button -->
+            <div class="row mt-5" v-if="names.length >= 2">
+                <div class="col-md-12 text-center">
+                    <button class="btn btn-warning" @click="detectLooser">Detect looser</button>
+                </div>
+            </div>
+
+        </div>
+        <!-- second screen (step 2) -->
+        <div class="container mt-5" id="secondScreen" v-if="looser.length > 0">
+            <div class="row text-center" >
+                    <h2 class="col-md-12">The Looser is:</h2>
+                    <div class="jumbotron col-md-12 mt-5">
+                        <p class="display-3">{{ looser }}</p>
+                    </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-center">
+                    <button class="btn btn-info" @click="startAgain">Start again</button>
+                </div>
+            </div> 
+        </div>
+    </div>
+<script src="js/index.js"></script>
+</body>
+</html>
